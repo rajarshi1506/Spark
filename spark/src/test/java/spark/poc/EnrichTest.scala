@@ -21,7 +21,7 @@ class EnrichTest extends FlatSpec with BeforeAndAfter {
       sc.stop()
   }
 
-  "test1" should "be equal" in {
+  "PassTest1" should "be equal" in {
     val lines = Seq("how are you doing")
     val inputRDD = sc.parallelize(lines, 1)
     var resultArr = Enrich.wordCount(inputRDD, " ").collect()
@@ -29,11 +29,11 @@ class EnrichTest extends FlatSpec with BeforeAndAfter {
     assert(resultArr.sameElements(expectedArr))
   }
   
-    "test2" should "not be equal" in {
+    "FailTest1" should "not be equal" in {
     val lines = Seq("how are you doing")
     val inputRDD = sc.parallelize(lines, 1)
     var resultArr = Enrich.wordCount(inputRDD, " ").collect()
     var expectedArr =Array(("are", 1), ("doing", 2), ("how", 1), ("you", 1))
-    assert(resultArr.sameElements(expectedArr))
+    assert(resultArr.sameElements(expectedArr)) 
   }
 }
