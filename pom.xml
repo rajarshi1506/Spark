@@ -33,6 +33,11 @@
 			<artifactId>spark-core_2.11</artifactId>
 			<version>1.6.3</version>
 		</dependency>
+				<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_2.11</artifactId>
+			<version>1.6.3</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.scalatest/scalatest -->
 		<dependency>
 			<groupId>org.scalatest</groupId>

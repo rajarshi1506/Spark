@@ -52,7 +52,7 @@ object AverageProcessTime {
     ssc.checkpoint(checkPointDir)
 
     //connect to socket to read the messages
-    val lines = ssc.socketTextStream("10.47.134.72", 1234) //only works with nc -l -p <port> from unix server
+    val lines = ssc.socketTextStream("127.0.0.1", 1234) //only works with nc -l -p <port> from unix server
     // lines.flatMap(_.split(" ")).map(x => (x, 1)).reduceByKey(_ + _).updateStateByKey(updateTotalCount).foreachRDD(_.take(100).foreach(println))
 
     val dStream = lines.flatMap(x => {
