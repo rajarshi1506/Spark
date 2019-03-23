@@ -1,0 +1,33 @@
+===========skewed data=======
+val rdd1 = sc.parallelize(List.fill(30000)(999) ::: List.range(1, 10000))
+val rdd2 = sc.parallelize(List.fill(30000)(999) ::: List.range(1, 10000))
+val resultRdd=rdd1.keyBy(_%9).join(rdd2.keyBy(_%9)).map(_._2)
+resultRdd.count
+===========skewed data=======
+
+===========non-skewed data==========
+val rdd3 = sc.parallelize(List.range(1, 40000))
+val rdd4 = sc.parallelize(List.range(1, 40000))
+val resultRdd2=rdd3.keyBy(_%9).join(rdd4.keyBy(_%9)).map(_._2)
+resultRdd2.count
+===========non-skewed data==========
+
+==========salting=============
+import java.util.Random
+val rdd1_salt=rdd1.keyBy(_%9).mapPartitions(it=>{
+val random = new Random()
+it.map( r => {
+(r._1+"_"+random.nextInt(301),r._2)
+})
+})
+
+val rdd2_salt=rdd1.keyBy(_%9).flatMap(r=>{
+var seq=Seq((r._1+"_"+0,r._2))
+for (a <- 1 to 300)
+seq=seq :+ (r._1+"_"+a,r._2) 
+seq
+})
+
+val resultRdd_salt=rdd1_salt.join(rdd2_salt).map(_._2)
+resultRdd_salt.count
+==========salting=============
